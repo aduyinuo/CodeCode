@@ -2,7 +2,7 @@
 
 - [x] Quadruple Sum to Target
 - [x] Comparing Strings containing backspaces (start from the end to help apply backspace)
-- [ ] Minimum Window Sort
+- [x] Minimum Window Sort
 
 ## Phrases for Algorithm Description
 
