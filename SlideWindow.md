@@ -1,3 +1,7 @@
+## Challenges
+
+- [x] Permutation in a String (hard)
+
 ## Phrases for Algorithm Description
 
 1. Use a [*HashMap*] to remember the frequency of each character we have processed
@@ -33,15 +37,14 @@
 
 `map.containsKey()`
 
-
-
 ## Best Practices
 
 - Better to update maximum as the final step of a `for` loop. 
 - Keep track of last appearance index or times of appearances
 - Shrink by jumping or moving slowly one step at a time
-
-
+- Identify if there's a `continuous` requirement on subarray or substring
+  - e.g. Cotaining a permutation of string doesn't means the permutation has to be continuous. It's also acceptable to have the characters of pattern string scattered.
+- `matchCnt`
 
 ## Mistakes
 
