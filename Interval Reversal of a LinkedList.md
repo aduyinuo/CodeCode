@@ -3,8 +3,6 @@
 - [x] Reverse alternating K-element Sub-list
 - [x] Rotate a LinkedList
 
-- [ ] 
-
 ## Phrases for Algorithm Description
 
 - Reverse the links between a set of nodes of a LinkedList, using the existing node objects and without using extra memory.
