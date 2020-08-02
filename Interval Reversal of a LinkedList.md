@@ -16,6 +16,11 @@
 - Please note the function call in the seconde step. We're skipping two elements as we will be skipping the middle element.
 - We can follow a similar approach, and in each iteration after reversing `k` elements, we will skip the next `k` elements
   - *Instead of using a flag*
+- Another way of defining the rotation is to take the sub-list of `k` ending nodes of the LinkedList and connect them to the beginning. Other than that we have to do three more things:
+  - Connect the last node of the LinkedList to the head, because the list will have a different tail after the rotation
+  - The new head of the LinkedList will be the node at the beginning of the sublist.
+  - The node right before the start of sublist will be the new tail of the rotated LinkedList.
+- Find the length and the last node of the list
 
 ## Syntax
 
@@ -29,7 +34,10 @@ if (k <= 1 || head == null)
   return head;
 ```
 
-
+```java
+if (head == null || head.next == null || rotations <= 0)
+  return head;
+```
 
 ## Best Practices
 
