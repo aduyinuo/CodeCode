@@ -2,8 +2,6 @@
 
 - [x] Next Interval
 
-- [ ] 
-
 ## Phrases for Algorithm Description
 
 - We are interested in knowing the smallest element in one part and the biggest element in the other part. This pattern uses two heaps to solve these problems: A min heap to find the smallest element and a max heap to find the biggest element.
