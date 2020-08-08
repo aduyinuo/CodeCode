@@ -2,7 +2,7 @@
 
 - [x] Find the Corrupt Pair
 - [x] Find the Smallest Missing Positive Number
-- [ ] Find the First K Missing Positive Numbers
+- [x] Find the First K Missing Positive Numbers
 
 ## Phrases for Algorithm Description
 
