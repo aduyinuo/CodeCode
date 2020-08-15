@@ -65,10 +65,13 @@ dp[0][s] = (num[0] == s ? 1 : 0);
 ## Mistakes
 
 - ```java
-  
+  // populate the sum=0 columns, as we can always for '0' sum with an empty set
+  for(int i=0; i < n; i++)
+    dp[i][0] = true;
   ```
 
-  - 
+  - `dp[i][s]` represents whether there exists a subset of first `i` items that can sum up to `s`
+  - empty set is the subset of every set, which happens to have a zero sum
 
 - 
 

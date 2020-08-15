@@ -46,9 +46,159 @@
   - e.g. Cotaining a permutation of string doesn't means the permutation has to be continuous. It's also acceptable to have the characters of pattern string scattered.
 - `matchCnt`
 
+### Abstraction
+
+```java
+class Window {
+    Map<Integer, Integer> count;
+    int nonzero;
+
+    Window() {
+        count = new HashMap();
+        nonzero = 0;
+    }
+
+    void add(int x) {
+        count.put(x, count.getOrDefault(x, 0) + 1);
+        if (count.get(x) == 1)
+            nonzero++;
+    }
+
+    void remove(int x) {
+        count.put(x, count.get(x) - 1);
+        if (count.get(x) == 0)
+            nonzero--;
+    }
+
+    int different() {
+        return nonzero;
+    }
+}
+```
+
+
+
 ## Mistakes
 
 - K distinct characters **!=** No duplicate character
 - Remember to shrink the window by `windowStart++`
 - Take care how many times you are allowed to flip 0 to 1
 
+- [x] Longest Substring Without Repeating Characters
+
+  - Shoule be able to use HashSet and HashMap
+
+  - `int maxLen = 0;`
+
+  - ```java
+    public int lengthOfLongestSubstring(String s) {
+        int maxLen = 0;
+        int windowStart = 0;
+        Set<Character> charSet = new HashSet<>();
+        for (int windowEnd = 0; windowEnd < s.length(); windowEnd++) {
+            char curr = s.charAt(windowEnd);
+            while (charSet.contains(curr) && windowStart <= windowEnd) {
+                char charStart = s.charAt(windowStart);
+                charSet.remove(charStart);
+                windowStart++;
+            }
+            charSet.add(curr);
+            maxLen = Math.max(maxLen, windowEnd - windowStart + 1);
+        }
+    
+        return maxLen;
+    }
+    ```
+
+    - Time complexity: `O(2n) = O(n)`. In the worst case each character will be visited twice by windowStart and windowEnd.
+
+  - The above solution requires at most 2n steps. In fact, it could be optimized to require only n steps. Instead of using a set to tell if a character exists or not, we could define a mapping of the characters to its index. Then we can skip the characters immediately when we found a repeated character.
+
+- [x] Minimum Window Substring
+
+  - Contain all characters => including duplicates
+
+- [x] Sliding Window Maximum
+
+  - ```ArrayDeque<Integer> deque = new ArrayDeque<Integer>();```
+  - Let's use a *deque* (double-ended queue), the structure which pops from / pushes to either side with the same `O(1) `performance.
+  - It's more handy to store in the deque **indexes instead of elements** since both are used during an array parsing.
+
+- [x] Longest Substring with At Most K Distinct Characters
+
+  - Forgot to update `windowStart`
+
+- [x] Longest Repeating Character Replacement
+
+  - ```if(k > s.length() || s.length() == 0) return s.length();```
+
+- [x] Permutation in String
+
+  - substring should be continuous
+
+- [x] Longest Turbulent Subarray
+
+  - Turbulent => strict larger or smaller => carefully consider the equal case
+
+  - Take care of corner situation: A.length <= 2
+
+  - Better approach: These alternating comparisons form contiguous blocks. We know when the next block ends: when it is the last two elements being compared, or when the sequence isn't alternating.
+
+  - ```java
+    public int maxTurbulenceSize(int[] A) {
+        int N = A.length;
+        int maxLen = 1;
+        int windowStart = 0;
+        for (int i = 1; i < N; i++) {
+            // Integer.compare()
+            int c = Integer.compare(A[i-1], A[i]);
+            if (c == 0) { 
+                // Read the definition of turbulent carefully
+                windowStart = i;
+            } else if (i == N - 1 || c * Integer.compare(A[i], A[i+1]) != -1) {
+                // Always make sure relevant variables are updated
+                maxLen = Math.max(maxLen, i - windowStart + 1);
+                windowStart = i;
+            }
+        }
+    
+        return maxLen;
+    }
+    ```
+
+- [x] Subarrays with K Different Integers
+
+  - The intuition is that after adding an extra element to our array, it is already valid or we need to shrink them a little bit to keep it valid.
+  - When a valid subarray is found, its subarrays with larger left end point and the same right end point might also be valid.
+  - We can keep two windows, one for `cnt > K`, one for `cnt >= K`
+
+- [x] **Moving Stones Until Consecutive II**
+
+  - ```java
+    public int[] numMovesStonesII(int[] A) {
+      Arrays.sort(A);
+      int i = 0, n = A.length, low = n;
+      int high = Math.max(A[n - 1] - n + 2 - A[1], A[n - 2] - A[0] - n + 2);
+      for (int j = 0; j < n; ++j) {
+      	while (A[j] - A[i] >= n) ++i;
+        if (j - i + 1 == n - 1 && A[j] - A[i] == n - 2)
+          low	 = Math.min(low, 2);
+        else
+          low = Math.min(low, n - (j - i + 1));
+      }
+      return new int[] {low, high};
+    }
+    ```
+
+  - If don't sort at the beginning, we will have to use nested `for-loop`. It's also not convinient to count missing stones. So sorting is necessary for this question.
+
+  - Lower Bound: in case of `n` stones, we need to find a consecutive `n` positions and move the stones in.This idea led the solution with sliding windows. Slide a window of size `N`, and find how many stones are already in this window. We want to move other stones into this window. For each missing stone, we need at least one move. Generally, the number of missing stones and the moves we need are the same. **Only one corner case in this problem, we need to move the endpoint to no endpoint.**
+
+  - Upper Bound: We try to move all stones to leftmost or rightmost. For example of to rightmost.
+    We move the `A[0]` to `A[1] + 1`. Then each time, we pick the stone of left endpoint, move it to the next empty position. During this process, the position of leftmost stones increment 1 by 1 each time. Until the leftmost is at `A[n - 1] - n + 1`.
+
+- [x]  Minimum Swaps to Group All 1's Together
+  - take care of corner case when `oneCnt = 0`
+
+- [x] [Get Equal Substrings Within Budget](https://leetcode.com/problems/get-equal-substrings-within-budget)  
+- [ ] 
